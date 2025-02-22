@@ -60,8 +60,10 @@
         public List<string> options { get; set; }
     }
 
-    public class AppUrl
+    public class FaqItem
     {
-        string app_url = "https://faqresponder.onrender.com/api/Faq/respond";
+        public string Question { get; set; }
+        public string Answer { get; set; }
     }
+
 }
