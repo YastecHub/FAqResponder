@@ -68,21 +68,21 @@ namespace FAqResponder.Controllers
                     Message = request.Message
                 });
             }
+        }
 
-
-            //[HttpGet("respond")]
-            //public IActionResult Respond([FromQuery] string message)
-            //{
-            //    var response = _faqService.GetResponses(message);
-            //    if (response != null)
-            //    {
-            //        return Ok(new
-            //        {
-            //            Response = response,
-            //        });
-            //    }
-            //    return NotFound("No matching FAQ found.");
-            //}
+        [HttpGet("respond")]
+        public IActionResult Respond([FromQuery] string message)
+        {
+            var response = _faqService.GetResponses(message);
+            if (response != null)
+            {
+                return Ok(new
+                {
+                    Response = response,
+                });
+            }
+            return NotFound("No matching FAQ found.");
         }
     }
 }
+
