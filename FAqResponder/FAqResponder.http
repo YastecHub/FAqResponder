@@ -1,0 +1,6 @@
+@FAqResponder_HostAddress = http://localhost:5126
+
+GET {{FAqResponder_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
