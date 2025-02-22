@@ -17,7 +17,7 @@ namespace FAqResponder.Controllers
         }
 
         [HttpGet("integration.json")]
-        public ActionResult GetIntegration()
+        public IActionResult GetIntegration()
         {
             var configSettings = _telex.GetTelexConfiguration();
             return Ok(configSettings);

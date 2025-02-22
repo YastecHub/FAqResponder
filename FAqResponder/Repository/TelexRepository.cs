@@ -14,11 +14,8 @@ namespace FAqResponder.Repository
         {
             try
             {
-                if (_config.GetSection("TelexIntegration").Key == null)
-                    return new TelexConfig();
-
-                return _config.GetSection("TelexIntegration").Get<TelexConfig>()!;
-
+                var telexConfig = _config.GetSection("TelexIntegration").Get<TelexConfig>();
+                return telexConfig ?? new TelexConfig();
             }
             catch (Exception ex)
             {
@@ -26,6 +23,5 @@ namespace FAqResponder.Repository
                 return new TelexConfig();
             }
         }
-
     }
 }
