@@ -1,3 +1,5 @@
+using FAqResponder.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,7 +22,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddSingleton<FaqService>();
+builder.Services.AddScoped<ITelex, TelexRepository>();
 
 
 var app = builder.Build();
