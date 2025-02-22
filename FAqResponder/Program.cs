@@ -21,6 +21,7 @@ builder.Services.AddCors(options =>
 
 
 builder.Services.Configure<TelexConfig>(builder.Configuration.GetSection("TelexIntegration"));
+builder.Services.Configure<Setting>(builder.Configuration.GetSection("TelexIntegration"));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

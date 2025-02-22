@@ -15,6 +15,14 @@ namespace FAqResponder.Repository
             try
             {
                 var telexConfig = _config.GetSection("TelexIntegration").Get<TelexConfig>();
+                if (telexConfig == null)
+                {
+                    Console.WriteLine("TelexConfig is null.");
+                }
+                else
+                {
+                    Console.WriteLine($"Settings count: {telexConfig.settings?.Count}");
+                }
                 return telexConfig ?? new TelexConfig();
             }
             catch (Exception ex)

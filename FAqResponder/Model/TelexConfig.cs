@@ -5,7 +5,6 @@
     public string integration_type { get; set; }
     public bool is_active { get; set; }
     public List<string> key_features { get; set; } = new List<string>();
-    public string author { get; set; }
     public List<Setting> settings { get; set; } = new List<Setting>();
     public string target_url { get; set; }
 }
