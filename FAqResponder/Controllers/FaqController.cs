@@ -10,129 +10,58 @@ namespace FAqResponder.Controllers
     [ApiController]
     public class FaqController : ControllerBase
     {
-        private readonly FaqService _faqService;
-
-        public FaqController(FaqService faqService)
+        [HttpGet("spec-settings")]
+        public IActionResult GetIntegrationSpecSettings()
         {
-            _faqService = faqService;
-        }
-
-        [HttpPost]
-        public IActionResult HandleTelexRequest([FromBody] TelexMessageRequest request)
-        {
-            try
+            var response = new IntegrationResponse
             {
-                string message = request.Message;
-
-                var settingsJson = JsonConvert.SerializeObject(request.Settings);
-                var settings = JsonConvert.DeserializeObject<List<TelexSetting>>(settingsJson);
-
-                var faqDataSetting = settings?.FirstOrDefault(s => s.Label == "FAQ Data");
-                if (faqDataSetting == null)
+                data = new Data
                 {
-                    return BadRequest("Missing required setting: FAQ Data.");
-                }
-
-                _faqService.UpdateFaqs(faqDataSetting.Default);
-
-                var response = _faqService.GetResponses(message);
-
-                if (response != null)
-                {
-                    return Ok(new TelexMessageResponse
+                    date = new Date
                     {
-                        Message = response
-                    });
-                }
-                else
-                {
-                    return Ok(new TelexMessageResponse
-                    {
-                        Message = message
-                    });
-                }
-            }
-            catch (JsonException ex)
-            {
-                Console.WriteLine($"JSON Error: {ex.Message}");
-                return Ok(new TelexMessageResponse
-                {
-                    Message = request.Message
-                });
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"General Error: {ex}");
-                return Ok(new TelexMessageResponse
-                {
-                    Message = request.Message
-                });
-            }
-        }
-
-        [HttpGet("data")]
-        public IActionResult GetIntegrationData()
-        {
-            var data = _integrationData.Integration.Select(i => i.Data).ToList();
-            return Ok(data);
-        }
-
-        private static readonly IntegrationResponse _integrationData = new()
-        {
-            Integration = new List<IntegrationItem>
-        {
-            new IntegrationItem
-            {
-                Data = new IntegrationData
-                {
-                    Date = new DateInfo
-                    {
-                        CreatedAt = "2024-10-27",
-                        UpdatedAt = "2024-10-27"
+                        created_at = "2024-10-27",
+                        updated_at = "2024-10-27"
                     },
-                    Descriptions = new Descriptions
+                    descriptions = new Descriptions
                     {
-                        AppDescription = "Answers frequently asked questions.",
-                        AppLogo = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1_aSwcH5s1rO9I8UvT6qZXYTuwyAfUluD2g&s",
-                        AppName = "FAQ Bot",
-                        AppUrl = "https://faqresponder.onrender.com/api/Faq/respond",
-                        BackgroundColor = "#FFFFFF"
+                        app_description = "Answers frequently asked questions.",
+                        app_logo = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1_aSwcH5s1rO9I8UvT6qZXYTuwyAfUluD2g&s",
+                        app_name = "FAQ Bot",
+                        app_url = "https://faqresponder.onrender.com/api/Faq/respond",
+                        background_color = "#FFFFFF"
                     },
-                    IntegrationCategory = "IT Service Management",
-                    IntegrationType = "modifier",
-                    IsActive = true,
-                    Output = new List<string>(),
-                    KeyFeatures = new List<string> { "Answers FAQs" },
-                    Permissions = new object(),
-                    Settings = new List<Setting>
+                    integration_category = "IT Service Management",
+                    integration_type = "modifier",
+                    is_active = true,
+                    output = new List<Output>
+                {
+                    new Output { label = "output_channel_1", value = true },
+                    new Output { label = "output_channel_2", value = false }
+                },
+                    key_features = new List<string> { "Answers FAQs" },
+                    permissions = new Permissions
                     {
-                        new Setting
+                        monitoring_user = new MonitoringUser
                         {
-                            Label = "FAQ Data",
-                            Type = "text_area",
-                            Required = true,
-                            Default = "[{\"question\": \"What is your return policy?\", \"answer\": \"Our return policy is 30 days.\"}]"
-                        },
-                        new Setting
-                        {
-                            Label = "FAQ Data",
-                            Type = "text_area",
-                            Required = true,
-                            Default = "[{\"question\": \"What is your name?\", \"answer\": \"Ola of Lagos\"}]"
-                        },
-                        new Setting
-                        {
-                            Label = "Similarity Threshold",
-                            Type = "number",
-                            Required = true,
-                            Default = "0.8"
+                            always_online = true,
+                            display_name = "Performance Monitor"
                         }
                     },
-                    TargetUrl = "https://faqresponder.onrender.com/api/Faq/respond/webhook"
+                    settings = new List<Setting>
+                {
+                    new Setting { label = "FAQ Data", type = "text_area", required = true, default_value = "[{\"question\": \"What is your return policy?\", \"answer\": \"Our return policy is 30 days.\"}]" },
+                    new Setting { label = "FAQ Data", type = "text_area", required = true, default_value = "[{\"question\": \"What is your name?\", \"answer\": \"Ola of Lagos\"}]" },
+                    new Setting { label = "Similarity Threshold", type = "number", required = true, default_value = "0.8" },
+                    new Setting { label = "Provide Speed", type = "number", required = true, default_value = "1000" },
+                    new Setting { label = "Sensitivity Level", type = "dropdown", required = true, default_value = "Low", options = new List<string> { "High", "Low" } },
+                    new Setting { label = "Alert Admin", type = "multi-checkbox", required = true, default_value = "Super-Admin", options = new List<string> { "Super-Admin", "Admin", "Manager", "Developer" } }
+                },
+                    target_url = "https://faqresponder.onrender.com/api/Faq/respond/webhook"
                 }
-            }
+            };
+
+            return Ok(response);
         }
-        };
     }
 }
 
