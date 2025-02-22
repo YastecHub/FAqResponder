@@ -1,8 +1,5 @@
 ﻿using FAqResponder.Model;
-using FAqResponder.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace FAqResponder.Controllers
 {
@@ -49,12 +46,48 @@ namespace FAqResponder.Controllers
                     },
                     settings = new List<Setting>
                 {
-                    new Setting { label = "FAQ Data", type = "text_area", required = true, default_value = "[{\"question\": \"What is your return policy?\", \"answer\": \"Our return policy is 30 days.\"}]" },
-                    new Setting { label = "FAQ Data", type = "text_area", required = true, default_value = "[{\"question\": \"What is your name?\", \"answer\": \"Ola of Lagos\"}]" },
-                    new Setting { label = "Similarity Threshold", type = "number", required = true, default_value = "0.8" },
-                    new Setting { label = "Provide Speed", type = "number", required = true, default_value = "1000" },
-                    new Setting { label = "Sensitivity Level", type = "dropdown", required = true, default_value = "Low", options = new List<string> { "High", "Low" } },
-                    new Setting { label = "Alert Admin", type = "multi-checkbox", required = true, default_value = "Super-Admin", options = new List<string> { "Super-Admin", "Admin", "Manager", "Developer" } }
+                    new Setting {
+                        label = "FAQ Data",
+                        type = "text_area",
+                        required = true,
+                        default_value = "[{\"question\": \"What is your return policy?\", \"answer\": \"Our return policy is 30 days.\"}]"
+                    },
+                    new Setting { 
+                        label = "FAQ Data", 
+                        type = "text_area", required = true, 
+                        default_value = "[{\"question\": \"What is your name?\", \"answer\": \"Ola of Lagos\"}]" 
+                    },
+                    new Setting { 
+                        label = "Similarity Threshold", 
+                        type = "number", 
+                        required = true, 
+                        default_value = "0.8" 
+                    },
+                    new Setting { 
+                        label = "Provide Speed", 
+                        type = "number", required = true, 
+                        default_value = "1000" 
+                    },
+                    new Setting { 
+                        label = "Sensitivity Level", 
+                        type = "dropdown", 
+                        required = true, 
+                        default_value = "Low", 
+                        options = new List<string> { "High", "Low" } 
+                    },
+                    new Setting { 
+                        label = "Alert Admin", 
+                        type = "multi-checkbox", 
+                        required = true, 
+                        default_value = "Super-Admin", 
+                        options = new List<string> 
+                        { 
+                            "Super-Admin", 
+                            "Admin", 
+                            "Manager", 
+                            "Developer" 
+                        } 
+                    }
                 },
                     target_url = "https://faqresponder.onrender.com/api/Faq/respond/webhook"
                 }

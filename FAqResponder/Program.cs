@@ -1,5 +1,3 @@
-using FAqResponder.Services;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -22,7 +20,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<FaqService>();
+//builder.Services.AddSingleton<FaqService>();
 
 
 var app = builder.Build();
