@@ -31,7 +31,7 @@ namespace FAqResponder.Controllers
                         app_description = "Answers frequently asked questions.",
                         app_logo = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1_aSwcH5s1rO9I8UvT6qZXYTuwyAfUluD2g&s",
                         app_name = "FAQ Bot",
-                        app_url = "https://faqresponder.onrender.com/api/Faq/respond",
+                        app_url = "https://faqresponder.onrender.com/api/Faq/spec-settings",
                         background_color = "#FFFFFF"
                     },
                     integration_category = "IT Service Management",
@@ -67,7 +67,7 @@ namespace FAqResponder.Controllers
                            default_value = "[{\"question\": \"What is your return policy?\", \"answer\": \"Our return policy is 30 days.\"}]"
                        }
                     },
-                    target_url = "https://faqresponder.onrender.com/api/Faq/respond/webhook"
+                    target_url = "https://faqresponder.onrender.com/api/Faq/spec-settings/webhook"
                 }
             };
 
