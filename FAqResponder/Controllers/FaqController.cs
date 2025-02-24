@@ -1,7 +1,6 @@
 ﻿using FAqResponder.Model;
 using FAqResponder.Repository;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 
 namespace FAqResponder.Controllers
 {
@@ -21,6 +20,27 @@ namespace FAqResponder.Controllers
         {
             var configSettings = _telex.GetTelexConfiguration();
             return Ok(configSettings);
+        }
+
+        [HttpPost("webhook")]
+        public IActionResult Webhook([FromBody] FaqRequest request)
+        {
+            if (request == null)
+            {
+                return BadRequest("Invalid request payload.");
+            }
+
+            var responseMessage = _telex.ProcessMessage(request);
+
+            var response = new FaqResponse
+            {
+                EventName = "faq_responded",
+                Message = responseMessage,
+                Status = "success",
+                Username = "faq-responder-bot"
+            };
+
+            return Ok(response);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿public class TelexConfig
+﻿using Newtonsoft.Json;
+
+public class TelexConfig
 {
     public Data data { get; set; } = new Data();
 }
@@ -32,8 +34,37 @@ public class Descriptions
 
 public class Setting
 {
-    public string label { get; set; }
-    public string type { get; set; }
-    public bool required { get; set; }
-    public string @default { get; set; }
+    [JsonProperty("label")]
+    public string Label { get; set; }
+
+    [JsonProperty("type")]
+    public string Type { get; set; }
+
+    [JsonProperty("required")]
+    public bool Required { get; set; }
+
+    [JsonProperty("default")]
+    public string Default { get; set; }
+}
+
+public class FaqPair
+{
+    public string Question { get; set; }
+    public string Answer { get; set; }
+}
+
+public class FaqRequest
+{
+    [JsonProperty("channel_id")] 
+    public string ChannelId { get; set; }
+    public List<Setting> Settings { get; set; }
+    public string Message { get; set; }
+}
+
+public class FaqResponse
+{
+    public string EventName { get; set; }
+    public string Message { get; set; }
+    public string Status { get; set; }
+    public string Username { get; set; }
 }

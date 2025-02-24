@@ -1,4 +1,6 @@
-﻿namespace FAqResponder.Repository
+﻿using Newtonsoft.Json;
+
+namespace FAqResponder.Repository
 {
     public class TelexRepository : ITelex
     {
@@ -32,6 +34,32 @@
                 Console.WriteLine(ex.Message);
                 return new TelexConfig();
             }
+        }
+
+        public string ProcessMessage(FaqRequest request)
+        {
+            // Parse FAQ data from settings
+            var faqPairs = new List<FaqPair>();
+            foreach (var setting in request.Settings)
+            {
+                if (setting.Label == "FAQ Data") // Ensure this matches the JSON payload
+                {
+                    var pairs = JsonConvert.DeserializeObject<List<FaqPair>>(setting.Default);
+                    faqPairs.AddRange(pairs);
+                }
+            }
+
+            // Check if the message matches any FAQ question
+            foreach (var pair in faqPairs)
+            {
+                if (request.Message.Contains(pair.Question, StringComparison.OrdinalIgnoreCase))
+                {
+                    return pair.Answer;
+                }
+            }
+
+            // If no match, return the original message
+            return request.Message;
         }
     }
 }
